@@ -151,8 +151,9 @@ int main(int argc, char **argv)
                     else if (!strncmp(path, "/api/download/", strlen("/api/download/"))) {
                         SSL_write(ssl, textHeader_200, strlen(textHeader_200));
                         int prefixLength = strlen("/api/download/");
-                        strncpy(filename, path + prefixLength , strlen(path) - prefixLength);
-                        filename[strlen(path) - prefixLength] = '\0';
+                        strcat(filename, "./storage/");
+                        strncpy(filename + strlen("./storage/"), path + prefixLength , strlen(path) - prefixLength);
+                        filename[strlen(path) - prefixLength + strlen("./storage/")] = '\0';
                         reply = readFile(filename, &bytes);
                     }
                     /* reply error message */
